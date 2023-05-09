@@ -9,4 +9,5 @@ class Event(models.Model):
     gamer = models.ForeignKey("Gamer", on_delete=models.CASCADE)
     attendees = models.ManyToManyField("Gamer",related_name="attending")
 
-#Why are fk in quotes?
+#Why are foreignkeys in quotes? 
+#? it allows for a connection without need for import

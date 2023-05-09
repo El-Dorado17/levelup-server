@@ -5,22 +5,22 @@
         "fields": {
             "description": "Mac-Pan event description...",
             "date": "2023-05-09",
-            "time": 1,
+            "time": "09:00",
             "game": 1,
-            "gamer": 3,
-            "attendees": 1
+            "gamer": 1,
+            "attendees": "1"
         }
     },
     {
         "model": "levelupapi.event",
-        "pk": 1,
+        "pk": 2,
         "fields": {
             "description": "Katana event description",
             "date": "2023-05-09",
-            "time": 1,
+            "time": "09:00",
             "game": 2,
-            "gamer": 3,
-            "attendees": 1
+            "gamer": 1,
+            "attendees": "1"
         }
     }
 ]
