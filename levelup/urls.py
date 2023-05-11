@@ -12,7 +12,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'gametypes', GameTypeView, 'gametype')
 router.register(r'games', GameView, 'game')
 router.register(r'events', EventView, 'event')
-
+#r'URL path', ClassName, 'term?'
 
 urlpatterns = [
     path('register', register_user),
