@@ -57,12 +57,12 @@ class GameTests(APITestCase):
 
         # Seed the database with a game
         game = Game()
-        game.game_type = GameType(1) #? WHY 
+        game.game_type = GameType(1)        #! Why do we need to GameType()
         game.skill_level = 5
-        game.title = "Monopoly"
+        game.title = "Monopoly"             #! What are .gamer and .game_type supposed to match? Models or Views?
         game.maker = "Milton Bradley"
         game.number_of_players = 4
-        game.gamer= Gamer(1) #? WHY 
+        game.gamer= Gamer(1) 
  
         game.save()
 
@@ -138,7 +138,7 @@ class GameTests(APITestCase):
 
         # DELETE the game you just created
         response = self.client.delete(f"/games/{Game.id}")
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND) 
 
         # GET the game again to verify you get a 404 response
         response = self.client.get(f"/games/{Game.id}")
