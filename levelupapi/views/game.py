@@ -37,8 +37,8 @@ class GameView(ViewSet):
             Response -- JSON serialized game instance
         """
         gamer = Gamer.objects.get(user=request.auth.user)
-        game_type = GameType.objects.get(pk=request.data["game_type"])
-
+        game_type = GameType.objects.get(pk=request.data["game_type_id"])
+# This is an outside model that gets used on line 47
         game = Game.objects.create(
             title=request.data["title"],
             maker=request.data["maker"],
@@ -47,8 +47,8 @@ class GameView(ViewSet):
             gamer=gamer,
             game_type=game_type
         )
-        serializer = GameSerializer(game)
-        return Response(serializer.data)
+        serializer = GameSerializer(game) #Front end needs this in JSON: Whole point of serializing
+        return Response(serializer.data, status= status.HTTP_201_CREATED)
     
     def update(self, request, pk):
         """Handle PUT requests for a game
@@ -83,3 +83,5 @@ class GameSerializer(serializers.ModelSerializer):
         model = Game
         fields = ('id', 'title', 'maker', 'number_of_players', 'skill_level',
                     'game_type', 'gamer')
+
+

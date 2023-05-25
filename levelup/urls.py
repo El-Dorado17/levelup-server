@@ -13,6 +13,7 @@ router.register(r'gametypes', GameTypeView, 'gametype')
 router.register(r'games', GameView, 'game')
 router.register(r'events', EventView, 'event')
 #r'URL path', ClassName, 'term?'
+#How we expose route in API 
 
 urlpatterns = [
     path('register', register_user),

@@ -9,5 +9,3 @@ class Game(models.Model):
     skill_level = models.IntegerField()
     game_type = models.ForeignKey("GameType", on_delete=models.CASCADE)
     gamer = models.ForeignKey("Gamer", on_delete=models.CASCADE)
-
-#models.CASCADE??
