@@ -12,9 +12,15 @@ class UserGameList(View):
 
             # TODO: Write a query to get all games along with the gamer first name, last name, and id
             db_cursor.execute("""
-            SELECT Game.title, Game.number_of_players, Game.skill_level, Game.game_type, x.user, x.id
-            FROM Game
-            JOIN Gamer x ON x.id = Game.gamer
+                SELECT 
+                    g.title,
+                    g.number_of_players,
+                    g.skill_level,
+                    g.game_type_id,
+                    x.user_id,
+                    x.id FROM levelupapi_game AS g
+                JOIN levelupapi_gamer AS x
+                JOIN auth_user AS u ON u.id = x.user_id 
             """)
             # Pass the db_cursor to the dict_fetch_all function to turn the fetch_all() response into a dictionary
             dataset = dict_fetch_all(db_cursor)
@@ -52,10 +58,18 @@ class UserGameList(View):
 
             for row in dataset:
                 # TODO: Create a dictionary called game that includes 
-                # the name, description, number_of_players, maker,
+                # the name, title, number_of_players, maker,
                 # game_type_id, and skill_level from the row dictionary
                 game = {
-                    
+                    "id": row["id"],
+                    "title": row["title"],
+                    "maker": ["maker"],
+                    "skill_level": row["skill_level"],
+                    "number_of_players": row["number_of_players"],
+                    "game_type_id": row["game_type_id"],
+                    "gamer_id": row["gamer_id"],
+                    "full_name": row["first_name"] + "" + row["last_name"]
+                
                 }
                 
                 # See if the gamer has been added to the games_by_user list already
@@ -73,7 +87,7 @@ class UserGameList(View):
                     games_by_user.append({
                         "gamer_id": row['gamer_id'],
                         "full_name": row['full_name'],
-                        "games": [game]
+                        "games": [game] 
                     })
         
         # The template string must match the file name of the html template
