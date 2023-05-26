@@ -20,6 +20,7 @@ urlpatterns = [
     path('login', login_user),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('', include('levelupreports.urls')), #Added from Book 4 CH 3
 ]
 
 #register
