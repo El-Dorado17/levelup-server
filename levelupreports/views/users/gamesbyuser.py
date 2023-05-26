@@ -12,15 +12,18 @@ class UserGameList(View):
 
             # TODO: Write a query to get all games along with the gamer first name, last name, and id
             db_cursor.execute("""
-                SELECT 
-                    g.title,
-                    g.number_of_players,
-                    g.skill_level,
-                    g.game_type_id,
-                    x.user_id,
-                    x.id FROM levelupapi_game AS g
-                JOIN levelupapi_gamer AS x
-                JOIN auth_user AS u ON u.id = x.user_id 
+            SELECT 
+                g.title,
+                g.number_of_players,
+                g.skill_level,
+                g.game_type_id,
+                x.user_id,
+                u.first_name,
+                u.last_name,
+                x.id
+            FROM levelupapi_game AS g
+            JOIN levelupapi_gamer AS x ON x.id = g.gamer_id
+            JOIN auth_user AS u ON u.id = x.user_id 
             """)
             # Pass the db_cursor to the dict_fetch_all function to turn the fetch_all() response into a dictionary
             dataset = dict_fetch_all(db_cursor)
@@ -67,7 +70,7 @@ class UserGameList(View):
                     "skill_level": row["skill_level"],
                     "number_of_players": row["number_of_players"],
                     "game_type_id": row["game_type_id"],
-                    "gamer_id": row["gamer_id"],
+                    "user_id": row["user_id"],
                     "full_name": row["first_name"] + "" + row["last_name"]
                 
                 }
@@ -75,7 +78,7 @@ class UserGameList(View):
                 # See if the gamer has been added to the games_by_user list already
                 user_dict = None
                 for user_game in games_by_user:
-                    if user_game['gamer_id'] == row['gamer_id']:
+                    if user_game['user_id'] == row['user_id']:
                         user_dict = user_game
                 
                 
@@ -85,8 +88,8 @@ class UserGameList(View):
                 else:
                     # If the user is not on the games_by_user list, create and add the user to the list
                     games_by_user.append({
-                        "gamer_id": row['gamer_id'],
-                        "full_name": row['full_name'],
+                        "user_id": row['user_id'],
+                        "full_name": row["first_name"] + "" + row["last_name"],
                         "games": [game] 
                     })
         

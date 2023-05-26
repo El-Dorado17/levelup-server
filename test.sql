@@ -10,12 +10,16 @@ SELECT
     g.skill_level,
     g.game_type_id,
     x.user_id,
-    x.id FROM levelupapi_game AS g
-JOIN levelupapi_gamer AS x
+    u.first_name,
+    u.last_name,
+    x.id
+FROM levelupapi_game AS g
+JOIN levelupapi_gamer AS x ON x.id = g.gamer_id
 JOIN auth_user AS u ON u.id = x.user_id 
 
 SELECT * FROM levelupapi_game
 SELECT * FROM levelupapi_gamer
+SELECT * FROM auth_user
 
 -- SELECT 
 --     g.title,
