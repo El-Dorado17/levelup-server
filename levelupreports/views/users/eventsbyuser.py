@@ -14,7 +14,8 @@ class UserEventList(View):
             db_cursor.execute("""
             SELECT 
                 e.id, 
-                e.description, 
+                e.gamer_id,
+                e.description AS game_name, 
                 e.date, 
                 e.time, 
                 u.last_name, 
@@ -27,33 +28,24 @@ class UserEventList(View):
             # Pass the db_cursor to the dict_fetch_all function to turn the fetch_all() response into a dictionary
             dataset = dict_fetch_all(db_cursor)
 
-            # Take the flat data from the dataset, and build the
-            # following data structure for each gamer.
-            # This will be the structure of the games_by_user list:
-            #
-            # [
-            #   {
-            #     "id": 1,
-            #     "full_name": "Admina Straytor",
-            #     "games": [
-            #       {
-            #         "id": 1,
-            #         "title": "Foo",
-            #         "maker": "Bar Games",
-            #         "skill_level": 3,
-            #         "number_of_players": 4,
-            #         "game_type_id": 2
-            #       },
-            #       {
-            #         "id": 2,
-            #         "title": "Foo 2",
-            #         "maker": "Bar Games 2",
-            #         "skill_level": 3,
-            #         "number_of_players": 4,
-            #         "game_type_id": 2
-            #       }
-            #     ]
-            #   },
+
+
+
+
+# [
+#   {
+#     "gamer_id": 1,
+#     "full_name": "Molly Ringwald",
+#     "events": [
+#       {
+#         "id": 5,
+#         "date": "2020-12-23",
+#         "time": "19:00",
+#         "game_name": "Fortress America"
+#       }
+#     ]
+#   }
+
             # ]
 
             events_by_user = []
@@ -63,21 +55,19 @@ class UserEventList(View):
                 # the name, title, number_of_players, maker,
                 # event_type_id, and skill_level from the row dictionary
                 event = {
+                    "gamer_id": row["gamer_id"],
+                    "full_name": row["first_name"] + " " + row["last_name"],
                     "id": row["id"],
-                    "title": row["title"],
-                    "maker": ["maker"],
-                    "skill_level": row["skill_level"],
-                    "number_of_players": row["number_of_players"],
-                    "game_type_id": row["game_type_id"],
-                    "user_id": row["user_id"],
-                    "full_name": row["first_name"] + "" + row["last_name"]
+                    "date": ["date"],
+                    "time": row["time"],
+                    "game_name": row["game_name"]
                 
                 }
                 
                 # See if the gamer has been added to the games_by_user list already
                 user_dict = None
                 for user_event in events_by_user:
-                    if user_event['user_id'] == row['user_id']:
+                    if user_event['gamer_id'] == row['gamer_id']:
                         user_dict = user_event
                 
                 
@@ -87,7 +77,7 @@ class UserEventList(View):
                 else:
                     # If the user is not on the events_by_user list, create and add the user to the list
                     events_by_user.append({
-                        "user_id": row['user_id'],
+                        "gamer_id": row['gamer_id'],
                         "full_name": row["first_name"] + "" + row["last_name"],
                         "events": [event] 
                     })

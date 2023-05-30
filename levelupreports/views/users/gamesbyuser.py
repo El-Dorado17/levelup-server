@@ -71,7 +71,7 @@ class UserGameList(View):
                     "number_of_players": row["number_of_players"],
                     "game_type_id": row["game_type_id"],
                     "user_id": row["user_id"],
-                    "full_name": row["first_name"] + "" + row["last_name"]
+                    "full_name": row["first_name"] + " " + row["last_name"]
                 
                 }
                 
@@ -89,7 +89,7 @@ class UserGameList(View):
                     # If the user is not on the games_by_user list, create and add the user to the list
                     games_by_user.append({
                         "user_id": row['user_id'],
-                        "full_name": row["first_name"] + "" + row["last_name"],
+                        "full_name": row["first_name"] + " " + row["last_name"],
                         "games": [game] 
                     })
         

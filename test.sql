@@ -51,3 +51,17 @@ SELECT *
 FROM levelupapi_event_attendees AS a
 JOIN levelupapi_gamer AS x ON x.id = a.gamer_id
 JOIN auth_user AS u ON u.id = x.user_id 
+
+
+            SELECT 
+                e.id, 
+                e.gamer_id,
+                e.description, 
+                e.date, 
+                e.time, 
+                u.last_name, 
+                u.first_name
+            FROM levelupapi_event AS e
+            JOIN levelupapi_event_attendees AS a ON a.id = e.gamer_id
+            JOIN levelupapi_gamer AS x ON x.id = a.gamer_id
+            JOIN auth_user AS u ON u.id = x.user_id
